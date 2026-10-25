@@ -1,0 +1,612 @@
+-- ========================================================
+--         ZETA HUB X - V1.5 MOBILE PRIME EDITION
+-- ========================================================
+
+local LinkvertiseURL = "https://link-hub.net/10082672/H7YSmQVixmzs"
+local CorrectKey = "ZETA-PRO-2026-V1.5"
+
+local Players = game:GetService("Players")
+local CoreGui = game:GetService("CoreGui")
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+local Camera = workspace.CurrentCamera
+
+-- // 1. PANTALLA DE CARGA ÚNICA (10 SEGUNDOS - 5 DATOS DE CUENTA) \\ --
+local LoadGui = Instance.new("ScreenGui")
+LoadGui.Name = "ZetaLoadingV1_5"
+LoadGui.Parent = CoreGui
+LoadGui.ResetOnSpawn = false
+
+local LoadFrame = Instance.new("Frame", LoadGui)
+LoadFrame.BackgroundColor3 = Color3.fromRGB(20, 23, 28)
+LoadFrame.Position = UDim2.new(0.5, -170, 0.5, -110)
+LoadFrame.Size = UDim2.new(0, 340, 0, 220)
+Instance.new("UICorner", LoadFrame).CornerRadius = UDim.new(0, 14)
+Instance.new("UIStroke", LoadFrame).Color = Color3.fromRGB(0, 230, 118)
+
+local LoadTitle = Instance.new("TextLabel", LoadFrame)
+LoadTitle.BackgroundTransparency = 1
+LoadTitle.Position = UDim2.new(0, 0, 0, 10)
+LoadTitle.Size = UDim2.new(1, 0, 0, 25)
+LoadTitle.Font = Enum.Font.GothamBold
+LoadTitle.Text = "⚡ ZETA HUB V1.5 - INICIALIZANDO ⚡"
+LoadTitle.TextColor3 = Color3.fromRGB(0, 230, 118)
+LoadTitle.TextSize = 14
+
+local AvatarImg = Instance.new("ImageLabel", LoadFrame)
+AvatarImg.BackgroundTransparency = 1
+AvatarImg.Position = UDim2.new(0.05, 0, 0.22, 0)
+AvatarImg.Size = UDim2.new(0, 50, 0, 50)
+pcall(function()
+    AvatarImg.Image = Players:GetUserThumbnailAsync(LocalPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
+end)
+Instance.new("UICorner", AvatarImg).CornerRadius = UDim.new(1, 0)
+
+-- 5 Cosas sobre la cuenta
+local accountAge = LocalPlayer.AccountAge
+local membership = LocalPlayer.MembershipType.Name
+local UserInfo = Instance.new("TextLabel", LoadFrame)
+UserInfo.BackgroundTransparency = 1
+UserInfo.Position = UDim2.new(0.24, 0, 0.20, 0)
+UserInfo.Size = UDim2.new(0.72, 0, 0, 75)
+UserInfo.Font = Enum.Font.GothamSemibold
+UserInfo.Text = "• Usuario: " .. LocalPlayer.Name .. "\n• ID: " .. LocalPlayer.UserId .. "\n• Antigüedad: " .. accountAge .. " días\n• Membresía: " .. membership .. "\n• Estado: Sincronizando datos..."
+UserInfo.TextColor3 = Color3.fromRGB(210, 210, 210)
+UserInfo.TextSize, UserInfo.TextXAlignment = 11, Enum.TextXAlignment.Left
+
+local BarBackground = Instance.new("Frame", LoadFrame)
+BarBackground.BackgroundColor3 = Color3.fromRGB(35, 40, 48)
+BarBackground.Position = UDim2.new(0.1, 0, 0.78, 0)
+BarBackground.Size = UDim2.new(0.8, 0, 0, 10)
+Instance.new("UICorner", BarBackground).CornerRadius = UDim.new(1, 0)
+
+local BarFill = Instance.new("Frame", BarBackground)
+BarFill.BackgroundColor3 = Color3.fromRGB(0, 230, 118)
+BarFill.Size = UDim2.new(0, 0, 1, 0)
+Instance.new("UICorner", BarFill).CornerRadius = UDim.new(1, 0)
+
+TweenService:Create(BarFill, TweenInfo.new(10, Enum.EasingStyle.Linear), {Size = UDim2.new(1, 0, 1, 0)}):Play()
+task.wait(10)
+LoadGui:Destroy()
+
+-- // 2. KEY SYSTEM ÚNICO + LINKVERTISE \\ --
+local KeySystemUI = Instance.new("ScreenGui")
+KeySystemUI.Name = "ZetaKeySystemV1_5"
+KeySystemUI.Parent = CoreGui
+KeySystemUI.ResetOnSpawn = false
+
+local KeyFrame = Instance.new("Frame", KeySystemUI)
+KeyFrame.BackgroundColor3 = Color3.fromRGB(20, 23, 28)
+KeyFrame.Position = UDim2.new(0.5, -160, 0.5, -120)
+KeyFrame.Size = UDim2.new(0, 320, 0, 220)
+KeyFrame.Active = true
+KeyFrame.Draggable = true
+Instance.new("UICorner", KeyFrame).CornerRadius = UDim.new(0, 14)
+Instance.new("UIStroke", KeyFrame).Color = Color3.fromRGB(0, 230, 118)
+
+task.spawn(function()
+    while KeyFrame and KeyFrame.Parent do
+        TweenService:Create(KeyFrame, TweenInfo.new(1.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {Position = UDim2.new(0.5, -160, 0.5, -110)}):Play()
+        task.wait(1.5)
+        TweenService:Create(KeyFrame, TweenInfo.new(1.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {Position = UDim2.new(0.5, -160, 0.5, -130)}):Play()
+        task.wait(1.5)
+    end
+end)
+
+local KeyTitle = Instance.new("TextLabel", KeyFrame)
+KeyTitle.BackgroundTransparency = 1
+KeyTitle.Position = UDim2.new(0, 0, 0, 10)
+KeyTitle.Size = UDim2.new(1, 0, 0, 25)
+KeyTitle.Font = Enum.Font.GothamBold
+KeyTitle.Text = "⚡ ZETA HUB - KEY SYSTEM ⚡"
+KeyTitle.TextColor3 = Color3.fromRGB(0, 230, 118)
+KeyTitle.TextSize = 14
+
+local KeyInput = Instance.new("TextBox", KeyFrame)
+KeyInput.BackgroundColor3 = Color3.fromRGB(35, 40, 48)
+KeyInput.Position = UDim2.new(0.1, 0, 0.28, 0)
+KeyInput.Size = UDim2.new(0.8, 0, 0, 32)
+KeyInput.Font = Enum.Font.Gotham
+KeyInput.PlaceholderText = "Ingresa la Key aquí..."
+KeyInput.Text = ""
+KeyInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+KeyInput.TextSize = 12
+Instance.new("UICorner", KeyInput).CornerRadius = UDim.new(0, 6)
+
+local VerifyBtn = Instance.new("TextButton", KeyFrame)
+VerifyBtn.BackgroundColor3 = Color3.fromRGB(0, 200, 100)
+VerifyBtn.Position = UDim2.new(0.1, 0, 0.52, 0)
+VerifyBtn.Size = UDim2.new(0.8, 0, 0, 32)
+VerifyBtn.Font = Enum.Font.GothamBold
+VerifyBtn.Text = "VERIFICAR KEY"
+VerifyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+VerifyBtn.TextSize = 12
+Instance.new("UICorner", VerifyBtn).CornerRadius = UDim.new(0, 6)
+
+local GetKeyBtn = Instance.new("TextButton", KeyFrame)
+GetKeyBtn.BackgroundColor3 = Color3.fromRGB(45, 52, 64)
+GetKeyBtn.Position = UDim2.new(0.1, 0, 0.75, 0)
+GetKeyBtn.Size = UDim2.new(0.8, 0, 0, 30)
+GetKeyBtn.Font = Enum.Font.Gotham
+GetKeyBtn.Text = "Obtener Key (Copiar Linkvertise)"
+GetKeyBtn.TextColor3 = Color3.fromRGB(200, 200, 220)
+GetKeyBtn.TextSize = 11
+Instance.new("UICorner", GetKeyBtn).CornerRadius = UDim.new(0, 6)
+
+GetKeyBtn.MouseButton1Click:Connect(function()
+    if setclipboard then
+        setclipboard(LinkvertiseURL)
+        GetKeyBtn.Text = "¡Link copiado al portapapeles!"
+        task.wait(2)
+        GetKeyBtn.Text = "Obtener Key (Copiar Linkvertise)"
+    else
+        GetKeyBtn.Text = LinkvertiseURL
+    end
+end)
+
+VerifyBtn.MouseButton1Click:Connect(function()
+    if KeyInput.Text == CorrectKey then
+        KeySystemUI:Destroy()
+
+        -- // 3. PANTALLA DE AGRADECIMIENTO ÚNICA (10 SEGUNDOS) \\ --
+        local ThxGui = Instance.new("ScreenGui")
+        ThxGui.Name = "ZetaThanksV1_5"
+        ThxGui.Parent = CoreGui
+        ThxGui.ResetOnSpawn = false
+
+        local ThxFrame = Instance.new("Frame", ThxGui)
+        ThxFrame.BackgroundColor3 = Color3.fromRGB(20, 23, 28)
+        ThxFrame.Position = UDim2.new(0.5, -150, 0.5, -85)
+        ThxFrame.Size = UDim2.new(0, 300, 0, 170)
+        Instance.new("UICorner", ThxFrame).CornerRadius = UDim.new(0, 14)
+        Instance.new("UIStroke", ThxFrame).Color = Color3.fromRGB(0, 230, 118)
+
+        local ThxTitle = Instance.new("TextLabel", ThxFrame)
+        ThxTitle.BackgroundTransparency = 1
+        ThxTitle.Position = UDim2.new(0, 0, 0, 12)
+        ThxTitle.Size = UDim2.new(1, 0, 0, 25)
+        ThxTitle.Font = Enum.Font.GothamBold
+        ThxTitle.Text = "⚡ ¡KEY CORRECTA! ⚡"
+        ThxTitle.TextColor3 = Color3.fromRGB(0, 230, 118)
+        ThxTitle.TextSize = 15
+
+        local ThxText = Instance.new("TextLabel", ThxFrame)
+        ThxText.BackgroundTransparency = 1
+        ThxText.Position = UDim2.new(0, 0, 0, 45)
+        ThxText.Size = UDim2.new(1, 0, 0, 60)
+        ThxText.Font = Enum.Font.GothamMedium
+        ThxText.Text = "¡Gracias por apoyar el proyecto!\nThanks for supporting!\nDiscord: discord.gg/NWkDhcG2p"
+        ThxText.TextColor3 = Color3.fromRGB(200, 200, 200)
+        ThxText.TextSize = 11
+
+        local ThxBarBack = Instance.new("Frame", ThxFrame)
+        ThxBarBack.BackgroundColor3 = Color3.fromRGB(35, 40, 48)
+        ThxBarBack.Position = UDim2.new(0.1, 0, 0.78, 0)
+        ThxBarBack.Size = UDim2.new(0.8, 0, 0, 8)
+        Instance.new("UICorner", ThxBarBack).CornerRadius = UDim.new(1, 0)
+
+        local ThxBarFill = Instance.new("Frame", ThxBarBack)
+        ThxBarFill.BackgroundColor3 = Color3.fromRGB(0, 230, 118)
+        ThxBarFill.Size = UDim2.new(0, 0, 1, 0)
+        Instance.new("UICorner", ThxBarFill).CornerRadius = UDim.new(1, 0)
+
+        TweenService:Create(ThxBarFill, TweenInfo.new(10, Enum.EasingStyle.Linear), {Size = UDim2.new(1, 0, 1, 0)}):Play()
+        task.wait(10)
+        ThxGui:Destroy()
+
+        -- // 4. MENÚ CENTRAL V1.5 \\ --
+        local HubGui = Instance.new("ScreenGui", CoreGui)
+        HubGui.Name = "ZetaMenuV1_5"
+        HubGui.ResetOnSpawn = false
+
+        local ToggleLogo = Instance.new("TextButton", HubGui)
+        ToggleLogo.Name = "ZetaZLogo"
+        ToggleLogo.BackgroundColor3 = Color3.fromRGB(20, 23, 28)
+        ToggleLogo.Position = UDim2.new(0.02, 0, 0.15, 0)
+        ToggleLogo.Size = UDim2.new(0, 45, 0, 45)
+        ToggleLogo.Active = true
+        ToggleLogo.Draggable = true
+        ToggleLogo.Font = Enum.Font.FredokaOne
+        ToggleLogo.Text = "ℤ"
+        ToggleLogo.TextColor3 = Color3.fromRGB(0, 230, 118)
+        ToggleLogo.TextSize = 24
+        Instance.new("UICorner", ToggleLogo).CornerRadius = UDim.new(1, 0)
+        Instance.new("UIStroke", ToggleLogo).Color = Color3.fromRGB(0, 230, 118)
+
+        local MainMenu = Instance.new("Frame", HubGui)
+        MainMenu.BackgroundColor3 = Color3.fromRGB(18, 21, 26)
+        MainMenu.Position = UDim2.new(0.5, -200, 0.5, -150)
+        MainMenu.Size = UDim2.new(0, 400, 0, 310)
+        MainMenu.Active = true
+        MainMenu.Draggable = true
+        Instance.new("UICorner", MainMenu).CornerRadius = UDim.new(0, 12)
+        Instance.new("UIStroke", MainMenu).Color = Color3.fromRGB(0, 230, 118)
+
+        ToggleLogo.MouseButton1Click:Connect(function()
+            MainMenu.Visible = not MainMenu.Visible
+        end)
+
+        task.spawn(function()
+            while MainMenu and MainMenu.Parent do
+                TweenService:Create(MainMenu, TweenInfo.new(2, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {Position = UDim2.new(0.5, -200, 0.5, -142)}):Play()
+                task.wait(2)
+                TweenService:Create(MainMenu, TweenInfo.new(2, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {Position = UDim2.new(0.5, -200, 0.5, -158)}):Play()
+                task.wait(2)
+            end
+        end)
+
+        local HeaderImg = Instance.new("ImageLabel", MainMenu)
+        HeaderImg.BackgroundTransparency = 1
+        HeaderImg.Position = UDim2.new(0.03, 0, 0.03, 0)
+        HeaderImg.Size = UDim2.new(0, 38, 0, 38)
+        pcall(function()
+            HeaderImg.Image = Players:GetUserThumbnailAsync(LocalPlayer.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
+        end)
+        Instance.new("UICorner", HeaderImg).CornerRadius = UDim.new(1, 0)
+
+        local TitleLabel = Instance.new("TextLabel", MainMenu)
+        TitleLabel.BackgroundTransparency = 1
+        TitleLabel.Position = UDim2.new(0.14, 0, 0.03, 0)
+        TitleLabel.Size = UDim2.new(0.5, 0, 0, 38)
+        TitleLabel.Font = Enum.Font.GothamBold
+        TitleLabel.Text = "ZETA HUB V1.5"
+        TitleLabel.TextColor3 = Color3.fromRGB(0, 230, 118)
+        TitleLabel.TextSize, TitleLabel.TextXAlignment = 12, Enum.TextXAlignment.Left
+
+        local CloseBtn = Instance.new("TextButton", MainMenu)
+        CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+        CloseBtn.Position = UDim2.new(0.88, 0, 0.03, 0)
+        CloseBtn.Size = UDim2.new(0, 30, 0, 30)
+        CloseBtn.Font = Enum.Font.GothamBold
+        CloseBtn.Text = "X"
+        CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+        CloseBtn.TextSize = 12
+        Instance.new("UICorner", CloseBtn).CornerRadius = UDim.new(0, 6)
+
+        CloseBtn.MouseButton1Click:Connect(function()
+            HubGui:Destroy()
+        end)
+
+        local Minimized = false
+        local MinBtn = Instance.new("TextButton", MainMenu)
+        MinBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+        MinBtn.Position = UDim2.new(0.77, 0, 0.03, 0)
+        MinBtn.Size = UDim2.new(0, 30, 0, 30)
+        MinBtn.Font = Enum.Font.GothamBold
+        MinBtn.Text = "-"
+        MinBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+        MinBtn.TextSize = 14
+        Instance.new("UICorner", MinBtn).CornerRadius = UDim.new(0, 6)
+
+        local TabCombat = Instance.new("TextButton", MainMenu)
+        TabCombat.BackgroundColor3 = Color3.fromRGB(30, 35, 42)
+        TabCombat.Position = UDim2.new(0.03, 0, 0.18, 0)
+        TabCombat.Size = UDim2.new(0.3, 0, 0, 30)
+        TabCombat.Font = Enum.Font.GothamBold
+        TabCombat.Text = "Combate"
+        TabCombat.TextColor3 = Color3.fromRGB(0, 230, 118)
+        TabCombat.TextSize = 11
+        Instance.new("UICorner", TabCombat).CornerRadius = UDim.new(0, 6)
+
+        local TabVisual = Instance.new("TextButton", MainMenu)
+        TabVisual.BackgroundColor3 = Color3.fromRGB(25, 28, 34)
+        TabVisual.Position = UDim2.new(0.35, 0, 0.18, 0)
+        TabVisual.Size = UDim2.new(0.3, 0, 0, 30)
+        TabVisual.Font = Enum.Font.GothamBold
+        TabVisual.Text = "Visuales"
+        TabVisual.TextColor3 = Color3.fromRGB(160, 160, 160)
+        TabVisual.TextSize = 11
+        Instance.new("UICorner", TabVisual).CornerRadius = UDim.new(0, 6)
+
+        local TabDiscord = Instance.new("TextButton", MainMenu)
+        TabDiscord.BackgroundColor3 = Color3.fromRGB(25, 28, 34)
+        TabDiscord.Position = UDim2.new(0.67, 0, 0.18, 0)
+        TabDiscord.Size = UDim2.new(0.3, 0, 0, 30)
+        TabDiscord.Font = Enum.Font.GothamBold
+        TabDiscord.Text = "Discord"
+        TabDiscord.TextColor3 = Color3.fromRGB(160, 160, 160)
+        TabDiscord.TextSize = 11
+        Instance.new("UICorner", TabDiscord).CornerRadius = UDim.new(0, 6)
+
+        local CombatContainer = Instance.new("Frame", MainMenu)
+        CombatContainer.BackgroundTransparency = 1
+        CombatContainer.Position = UDim2.new(0.03, 0, 0.32, 0)
+        CombatContainer.Size = UDim2.new(0.94, 0, 0.63, 0)
+        CombatContainer.Visible = true
+
+        local VisualContainer = Instance.new("Frame", MainMenu)
+        VisualContainer.BackgroundTransparency = 1
+        VisualContainer.Position = UDim2.new(0.03, 0, 0.32, 0)
+        VisualContainer.Size = UDim2.new(0.94, 0, 0.63, 0)
+        VisualContainer.Visible = false
+
+        local DiscordContainer = Instance.new("Frame", MainMenu)
+        DiscordContainer.BackgroundTransparency = 1
+        DiscordContainer.Position = UDim2.new(0.03, 0, 0.32, 0)
+        DiscordContainer.Size = UDim2.new(0.94, 0, 0.63, 0)
+        DiscordContainer.Visible = false
+
+        MinBtn.MouseButton1Click:Connect(function()
+            Minimized = not Minimized
+            CombatContainer.Visible = not Minimized and TabCombat.TextColor3 == Color3.fromRGB(0, 230, 118)
+            VisualContainer.Visible = not Minimized and TabVisual.TextColor3 == Color3.fromRGB(0, 230, 118)
+            DiscordContainer.Visible = not Minimized and TabDiscord.TextColor3 == Color3.fromRGB(0, 230, 118)
+            TabCombat.Visible = not Minimized
+            TabVisual.Visible = not Minimized
+            TabDiscord.Visible = not Minimized
+            MainMenu.Size = Minimized and UDim2.new(0, 400, 0, 55) or UDim2.new(0, 400, 0, 310)
+            MinBtn.Text = Minimized and "+" or "-"
+        end)
+
+        TabCombat.MouseButton1Click:Connect(function()
+            CombatContainer.Visible = true; VisualContainer.Visible = false; DiscordContainer.Visible = false
+            TabCombat.BackgroundColor3 = Color3.fromRGB(30, 35, 42); TabCombat.TextColor3 = Color3.fromRGB(0, 230, 118)
+            TabVisual.BackgroundColor3 = Color3.fromRGB(25, 28, 34); TabVisual.TextColor3 = Color3.fromRGB(160, 160, 160)
+            TabDiscord.BackgroundColor3 = Color3.fromRGB(25, 28, 34); TabDiscord.TextColor3 = Color3.fromRGB(160, 160, 160)
+        end)
+
+        TabVisual.MouseButton1Click:Connect(function()
+            CombatContainer.Visible = false; VisualContainer.Visible = true; DiscordContainer.Visible = false
+            TabCombat.BackgroundColor3 = Color3.fromRGB(25, 28, 34); TabCombat.TextColor3 = Color3.fromRGB(160, 160, 160)
+            TabVisual.BackgroundColor3 = Color3.fromRGB(30, 35, 42); TabVisual.TextColor3 = Color3.fromRGB(0, 230, 118)
+            TabDiscord.BackgroundColor3 = Color3.fromRGB(25, 28, 34); TabDiscord.TextColor3 = Color3.fromRGB(160, 160, 160)
+        end)
+
+        TabDiscord.MouseButton1Click:Connect(function()
+            CombatContainer.Visible = false; VisualContainer.Visible = false; DiscordContainer.Visible = true
+            TabCombat.BackgroundColor3 = Color3.fromRGB(25, 28, 34); TabCombat.TextColor3 = Color3.fromRGB(160, 160, 160)
+            TabVisual.BackgroundColor3 = Color3.fromRGB(25, 28, 34); TabVisual.TextColor3 = Color3.fromRGB(160, 160, 160)
+            TabDiscord.BackgroundColor3 = Color3.fromRGB(30, 35, 42); TabDiscord.TextColor3 = Color3.fromRGB(0, 230, 118)
+        end)
+
+        -- --- FASE COMBATE ---
+        local AimbotEnabled = false
+        local ShowFOV = false
+        local FOVRadius = 150
+
+        local AimbotBtn = Instance.new("TextButton", CombatContainer)
+        AimbotBtn.BackgroundColor3 = Color3.fromRGB(30, 35, 42)
+        AimbotBtn.Position = UDim2.new(0, 0, 0.03, 0)
+        AimbotBtn.Size = UDim2.new(1, 0, 0, 35)
+        AimbotBtn.Font = Enum.Font.GothamBold
+        AimbotBtn.Text = "Aimbot (165 Studs): OFF"
+        AimbotBtn.TextColor3 = Color3.fromRGB(255, 90, 90)
+        AimbotBtn.TextSize = 12
+        Instance.new("UICorner", AimbotBtn).CornerRadius = UDim.new(0, 6)
+
+        AimbotBtn.MouseButton1Click:Connect(function()
+            AimbotEnabled = not AimbotEnabled
+            AimbotBtn.Text = AimbotEnabled and "Aimbot (165 Studs): ON" or "Aimbot (165 Studs): OFF"
+            AimbotBtn.TextColor3 = AimbotEnabled and Color3.fromRGB(0, 230, 118) or Color3.fromRGB(255, 90, 90)
+        end)
+
+        local FOVViewBtn = Instance.new("TextButton", CombatContainer)
+        FOVViewBtn.BackgroundColor3 = Color3.fromRGB(30, 35, 42)
+        FOVViewBtn.Position = UDim2.new(0, 0, 0.28, 0)
+        FOVViewBtn.Size = UDim2.new(1, 0, 0, 32)
+        FOVViewBtn.Font = Enum.Font.GothamBold
+        FOVViewBtn.Text = "Ver Círculo FOV: OFF"
+        FOVViewBtn.TextColor3 = Color3.fromRGB(255, 90, 90)
+        FOVViewBtn.TextSize = 11
+        Instance.new("UICorner", FOVViewBtn).CornerRadius = UDim.new(0, 6)
+
+        FOVViewBtn.MouseButton1Click:Connect(function()
+            ShowFOV = not ShowFOV
+            FOVViewBtn.Text = ShowFOV and "Ver Círculo FOV: ON" or "Ver Círculo FOV: OFF"
+            FOVViewBtn.TextColor3 = ShowFOV and Color3.fromRGB(0, 230, 118) or Color3.fromRGB(255, 90, 90)
+        end)
+
+        local FOVLabel = Instance.new("TextLabel", CombatContainer)
+        FOVLabel.BackgroundTransparency = 1
+        FOVLabel.Position = UDim2.new(0, 0, 0.54, 0)
+        FOVLabel.Size = UDim2.new(1, 0, 0, 20)
+        FOVLabel.Font = Enum.Font.GothamMedium
+        FOVLabel.Text = "FOV Radio: " .. FOVRadius
+        FOVLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+        FOVLabel.TextSize = 11
+
+        local SliderBack = Instance.new("Frame", CombatContainer)
+        SliderBack.BackgroundColor3 = Color3.fromRGB(30, 35, 42)
+        SliderBack.Position = UDim2.new(0, 0, 0.68, 0)
+        SliderBack.Size = UDim2.new(1, 0, 0, 12)
+        Instance.new("UICorner", SliderBack).CornerRadius = UDim.new(1, 0)
+
+        local SliderFill = Instance.new("Frame", SliderBack)
+        SliderFill.BackgroundColor3 = Color3.fromRGB(0, 230, 118)
+        SliderFill.Size = UDim2.new(FOVRadius / 400, 0, 1, 0)
+        Instance.new("UICorner", SliderFill).CornerRadius = UDim.new(1, 0)
+
+        local UIS = game:GetService("UserInputService")
+        local draggingSlider = false
+        SliderBack.InputBegan:Connect(function(inp)
+            if inp.UserInputType == Enum.UserInputType.MouseButton1 or inp.UserInputType == Enum.UserInputType.Touch then
+                draggingSlider = true
+            end
+        end)
+        UIS.InputEnded:Connect(function(inp)
+            if inp.UserInputType == Enum.UserInputType.MouseButton1 or inp.UserInputType == Enum.UserInputType.Touch then
+                draggingSlider = false
+            end
+        end)
+        UIS.InputChanged:Connect(function(inp)
+            if draggingSlider and (inp.UserInputType == Enum.UserInputType.MouseMovement or inp.UserInputType == Enum.UserInputType.Touch) then
+                local pos = math.clamp((inp.Position.X - SliderBack.AbsolutePosition.X) / SliderBack.AbsoluteSize.X, 0, 1)
+                SliderFill.Size = UDim2.new(pos, 0, 1, 0)
+                FOVRadius = math.floor(pos * 400)
+                FOVLabel.Text = "FOV Radio: " .. FOVRadius
+            end
+        end)
+
+        -- --- FASE VISUALES ---
+        local WallhackEnabled = false
+        local WallhackRGBEnabled = false
+
+        local WallhackBtn = Instance.new("TextButton", VisualContainer)
+        WallhackBtn.BackgroundColor3 = Color3.fromRGB(30, 35, 42)
+        WallhackBtn.Position = UDim2.new(0, 0, 0.05, 0)
+        WallhackBtn.Size = UDim2.new(1, 0, 0, 38)
+        WallhackBtn.Font = Enum.Font.GothamBold
+        WallhackBtn.Text = "Wallhack (Chams): OFF"
+        WallhackBtn.TextColor3 = Color3.fromRGB(255, 90, 90)
+        WallhackBtn.TextSize = 12
+        Instance.new("UICorner", WallhackBtn).CornerRadius = UDim.new(0, 6)
+
+        local RGBBtn = Instance.new("TextButton", VisualContainer)
+        RGBBtn.BackgroundColor3 = Color3.fromRGB(30, 35, 42)
+        RGBBtn.Position = UDim2.new(0, 0, 0.40, 0)
+        RGBBtn.Size = UDim2.new(1, 0, 0, 38)
+        RGBBtn.Font = Enum.Font.GothamBold
+        RGBBtn.Text = "Wallhack RGB: OFF"
+        RGBBtn.TextColor3 = Color3.fromRGB(255, 90, 90)
+        RGBBtn.TextSize = 12
+        Instance.new("UICorner", RGBBtn).CornerRadius = UDim.new(0, 6)
+
+        WallhackBtn.MouseButton1Click:Connect(function()
+            WallhackEnabled = not WallhackEnabled
+            WallhackBtn.Text = WallhackEnabled and "Wallhack (Chams): ON" or "Wallhack (Chams): OFF"
+            WallhackBtn.TextColor3 = WallhackEnabled and Color3.fromRGB(0, 230, 118) or Color3.fromRGB(255, 90, 90)
+            if not WallhackEnabled then
+                WallhackRGBEnabled = false
+                RGBBtn.Text = "Wallhack RGB: OFF"
+                RGBBtn.TextColor3 = Color3.fromRGB(255, 90, 90)
+            end
+        end)
+
+        RGBBtn.MouseButton1Click:Connect(function()
+            if not WallhackEnabled then
+                game.StarterGui:SetCore("SendNotification", {
+                    Title = "⚠️ ADVERTENCIA",
+                    Text = "¡Activa el Wallhack primero antes de usar RGB!\nEnable Wallhack first!",
+                    Duration = 4
+                })
+            else
+                WallhackRGBEnabled = not WallhackRGBEnabled
+                RGBBtn.Text = WallhackRGBEnabled and "Wallhack RGB: ON" or "Wallhack RGB: OFF"
+                RGBBtn.TextColor3 = WallhackRGBEnabled and Color3.fromRGB(0, 230, 118) or Color3.fromRGB(255, 90, 90)
+            end
+        end)
+
+        -- --- FASE DISCORD ---
+        local DiscordInfo = Instance.new("TextLabel", DiscordContainer)
+        DiscordInfo.BackgroundTransparency = 1
+        DiscordInfo.Position = UDim2.new(0, 0, 0.05, 0)
+        DiscordInfo.Size = UDim2.new(1, 0, 0, 70)
+        DiscordInfo.Font = Enum.Font.GothamBold
+        DiscordInfo.Text = "¡Comunidad oficial de Zeta Hub!\nDiscord: discord.gg/NWkDhcG2p"
+        DiscordInfo.TextColor3 = Color3.fromRGB(210, 210, 210)
+        DiscordInfo.TextSize = 12
+
+        local CopyDiscordBtn = Instance.new("TextButton", DiscordContainer)
+        CopyDiscordBtn.BackgroundColor3 = Color3.fromRGB(0, 200, 100)
+        CopyDiscordBtn.Position = UDim2.new(0, 0, 0.50, 0)
+        CopyDiscordBtn.Size = UDim2.new(1, 0, 0, 38)
+        CopyDiscordBtn.Font = Enum.Font.GothamBold
+        CopyDiscordBtn.Text = "Copiar Link de Discord"
+        CopyDiscordBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+        CopyDiscordBtn.TextSize = 12
+        Instance.new("UICorner", CopyDiscordBtn).CornerRadius = UDim.new(0, 6)
+
+        CopyDiscordBtn.MouseButton1Click:Connect(function()
+            if setclipboard then
+                setclipboard("discord.gg/NWkDhcG2p")
+                CopyDiscordBtn.Text = "¡Copiado al portapapeles!"
+                task.wait(2)
+                CopyDiscordBtn.Text = "Copiar Link de Discord"
+            end
+        end)
+
+        -- Círculo FOV visual & Motor de Aimbot & Wallhacks
+        local FOVCircle = Drawing.new("Circle")
+        FOVCircle.Visible = true
+        FOVCircle.Transparency = 0.6
+        FOVCircle.Color = Color3.fromRGB(0, 230, 118)
+        FOVCircle.Thickness = 2
+        FOVCircle.Radius = FOVRadius
+        FOVCircle.Filled = false
+
+        local rgbHue = 0
+        RunService.RenderStepped:Connect(function()
+            FOVCircle.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+            FOVCircle.Radius = FOVRadius
+            FOVCircle.Visible = ShowFOV
+
+            if WallhackRGBEnabled then
+                rgbHue = (rgbHue + 0.01) % 1
+            end
+            local currentChamsColor = WallhackRGBEnabled and Color3.fromHSV(rgbHue, 1, 1) or Color3.fromRGB(0, 230, 118)
+
+            if AimbotEnabled then
+                local closestPlayer = nil
+                local shortestDistance = FOVRadius
+
+                for _, player in ipairs(Players:GetPlayers()) do
+                    if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") and player.Character:FindFirstChild("Humanoid") and player.Character.Humanoid.Health > 0 then
+                        
+                        local isTeamMate = false
+                        if player.Team and LocalPlayer.Team and player.Team == LocalPlayer.Team then
+                            isTeamMate = true
+                        end
+
+                        if not isTeamMate then
+                            local hrp = player.Character.HumanoidRootPart
+                            local screenPoint, onScreen = Camera:WorldToViewportPoint(hrp.Position)
+                            
+                            if onScreen then
+                                local mousePos = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+                                local distance = (Vector2.new(screenPoint.X, screenPoint.Y) - mousePos).Magnitude
+
+                                if distance < shortestDistance and (hrp.Position - LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 165 then
+                                    shortestDistance = distance
+                                    closestPlayer = player
+                                end
+                            end
+                        end
+                    end
+                end
+
+                if closestPlayer and closestPlayer.Character:FindFirstChild("Head") then
+                    local targetCFrame = CFrame.new(Camera.CFrame.Position, closestPlayer.Character.Head.Position)
+                    Camera.CFrame = Camera.CFrame:Lerp(targetCFrame, 0.25)
+                end
+            end
+
+            for _, player in ipairs(Players:GetPlayers()) do
+                if player ~= LocalPlayer and player.Character then
+                    local char = player.Character
+                    if WallhackEnabled then
+                        if not char:FindFirstChild("ZetaHighlight") then
+                            local hl = Instance.new("Highlight")
+                            hl.Name = "ZetaHighlight"
+                            hl.Adornee = char
+                            hl.FillColor = currentChamsColor
+                            hl.OutlineColor = Color3.fromRGB(255, 255, 255)
+                            hl.Parent = char
+                        else
+                            char.ZetaHighlight.FillColor = currentChamsColor
+                        end
+                    else
+                        if char:FindFirstChild("ZetaHighlight") then
+                            char.ZetaHighlight:Destroy()
+                        end
+                    end
+                end
+            end
+        end)
+
+        task.delay(60, function()
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "⚠️ ADVERTENCIA / WARNING",
+                Text = "Usa el script con cuidado para evitar bans. No abuses.\nUse carefully to avoid bans.",
+                Duration = 8
+            })
+        end)
+
+    else
+        VerifyBtn.Text = "¡Key Incorrecta / Wrong Key!"
+        VerifyBtn.BackgroundColor3 = Color3.fromRGB(200, 50, 50)
+        task.wait(1.5)
+        VerifyBtn.Text = "VERIFICAR KEY"
+        VerifyBtn.BackgroundColor3 = Color3.fromRGB(0, 200, 100)
+    end
+end)
